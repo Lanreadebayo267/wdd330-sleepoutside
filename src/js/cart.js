@@ -1,17 +1,9 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+
+loadHeaderFooter();
 
 function renderCartContents() {
-  // Step 1a: get cart safely
-  const cartItems = getLocalStorage("so-cart") || []; // default to empty array if null
-
-  // Step 1b: handle empty cart
-  if (cartItems.length === 0) {
-    document.querySelector(".product-list").innerHTML =
-      '<p class="empty-cart-message">Your cart is empty.</p>';
-    return; // stop further execution
-  }
-
-  // Step 1c: render items if cart is not empty
+  const cartItems = getLocalStorage("so-cart");
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 }
@@ -22,7 +14,7 @@ function cartItemTemplate(item) {
     <img
       src="${item.Image}"
       alt="${item.Name}"
-    />
+   >
   </a>
   <a href="#">
     <h2 class="card__name">${item.Name}</h2>
